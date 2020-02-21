@@ -1,5 +1,6 @@
 import React from "react";
 import { useSpring, animated } from "react-spring";
+import Fade from "react-reveal/Fade";
 import { gear } from "./gear";
 
 const calc = (x, y) => [
@@ -18,16 +19,18 @@ export default function ShowGear() {
 
   let gearList = gear.items.map(item => {
     return (
-      <animated.div
-        className="card"
-        key={item.id}
-        onMouseMove={({ clientX: x, clientY: y }) => set({ xys: calc(x, y) })}
-        onMouseLeave={() => set({ xys: [0, 0, 1] })}
-        style={{ transform: props.xys.interpolate(trans) }}
-      >
-        <img className="card-image" src={item.img} alt={item.title} />
-        <span className="card-title">{item.title}</span>
-      </animated.div>
+      <Fade bottom key={item.id}>
+        <animated.div
+          className="card"
+          key={item.id}
+          onMouseMove={({ clientX: x, clientY: y }) => set({ xys: calc(x, y) })}
+          onMouseLeave={() => set({ xys: [0, 0, 1] })}
+          style={{ transform: props.xys.interpolate(trans) }}
+        >
+          <img className="card-image" src={item.img} alt={item.title} />
+          <span className="card-title">{item.title}</span>
+        </animated.div>
+      </Fade>
     );
   });
 
